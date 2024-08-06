@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
 	"os"
 	"os/exec"
+	"strconv"
 	"strings"
 )
-
-var bank_amount int = 1000
 
 // Package installer function
 
@@ -60,27 +61,71 @@ func check_os_env(key string) string {
 
 func bank_crud_entrypoint() {
 
-	var bank_choice int
+	for {
+		var bank_amount int
+		var bank_choice int
+		filename := "bank.txt"
+		fmt.Println("Choose operation")
+		fmt.Println(`
+		1. Check bank amount
+		2. Add money
+		3. Withdraw money
+		4. Exit
+		`)
+		fmt.Print("Your choice : ")
+		fmt.Scan(&bank_choice)
 
-	fmt.Println("Choose operation")
-	fmt.Println(`
-	1. Check bank amount
-	2. Add money
-	3. Withdraw money
-	4. Exit
-	`)
-	fmt.Print("Your choice : ")
-	fmt.Scan(&bank_choice)
+		if bank_choice == 1 {
+			bank_amount = read_from_file(filename)
+			check_bank_amount(bank_amount)
 
-	if bank_choice == 1 {
-		check_bank_amount(bank_amount)
-	} else if bank_choice == 2 {
-		add_bank_amount(bank_amount)
-	} else if bank_choice == 3 {
-		withdraw_bank_amount(bank_amount)
-	} else if bank_choice == 4 {
-		os.Exit(0)
+		} else if bank_choice == 2 {
+
+			add_bank_amount(filename)
+
+		} else if bank_choice == 3 {
+			withdraw_bank_amount(filename)
+
+		} else if bank_choice == 4 {
+			os.Exit(0)
+		}
+
 	}
+
+}
+
+func write_to_file(filename string, amount int) {
+
+	str_amount := strconv.Itoa(amount)
+	err := os.WriteFile(filename, []byte(str_amount), 0644)
+
+	if err != nil {
+		fmt.Println("Unable to write file")
+		log.Fatal(err)
+	}
+	fmt.Println("Success update of file")
+
+}
+
+func read_from_file(filename string) int {
+	content, err := ioutil.ReadFile(filename)
+	int_content, err := strconv.Atoi(string(content))
+	if err != nil {
+		fmt.Println("Unable to read file")
+		log.Fatal(err)
+	}
+	fmt.Println("Success read from file ")
+	return int_content
+
+}
+
+func clear_file(filename string) {
+	err := os.Truncate(filename, 0)
+	if err != nil {
+		fmt.Println("Truncate error")
+		log.Fatal(err)
+	}
+	fmt.Println("Success clear file")
 
 }
 
@@ -89,56 +134,85 @@ func check_bank_amount(amount int) {
 
 }
 
-func add_bank_amount(amount int) {
+func add_bank_amount(filename string) int {
+	amount := read_from_file(filename)
 	var add_sum int
 	fmt.Print("Enter cash amount :")
 	fmt.Scan(&add_sum)
-	amount += add_sum
+	if add_sum > 0 {
+		amount += add_sum
+		fmt.Println(amount)
+		clear_file(filename)
+		write_to_file(filename, amount)
+
+	} else {
+
+		fmt.Println("Incorrect money output")
+	}
+
 	fmt.Println("Success account replenishment")
+	return amount
 }
 
-func withdraw_bank_amount(amount int) {
+func withdraw_bank_amount(filename string) int {
+	amount := read_from_file(filename)
 	var withdraw_sum int
 	fmt.Print("Enter cash amount :")
 	fmt.Scan(&withdraw_sum)
-	amount -= withdraw_sum
+	if withdraw_sum <= amount {
+		amount -= withdraw_sum
+		fmt.Println(amount)
+		clear_file(filename)
+		write_to_file(filename, amount)
+		// amount = bank_amount
+
+	}
+
 	fmt.Println("Success withdrawal from account")
+	return amount
 }
 
 // Entrypoint
 
 func main() {
 
-	var choice int
+	for {
+		var choice int
 
-	fmt.Println("Choose function to continue")
-	fmt.Println(`
+		fmt.Println("Choose function to continue")
+		fmt.Println(`
 	1. Add packages to system
 	2. Check env value at *nix system
 	3. Bank simple CRUD	app
 	4. Exit
+	5. Test write to file
 	
 	`)
-	fmt.Print("Your choice : ")
-	fmt.Scan(&choice)
+		fmt.Print("Your choice : ")
+		fmt.Scan(&choice)
+		switch choice {
+		case 1:
+			install_packages()
 
-	if choice == 1 {
+		case 2:
+			input_key := check_user_input()
+			input_value := check_os_env(input_key)
+			fmt.Println("Your value :", input_value)
 
-		install_packages()
+		case 3:
+			bank_crud_entrypoint()
+		case 4:
+			os.Exit(0)
+		case 5:
+			err := os.WriteFile("bank.txt", []byte("1000"), 0644)
 
-	} else if choice == 2 {
+			if err != nil {
+				fmt.Println("Unable to write file")
+				log.Fatal(err)
+			}
 
-		input_key := check_user_input()
-		input_value := check_os_env(input_key)
-		fmt.Println("Your value :", input_value)
+		}
 
-	} else if choice == 3 {
-
-		bank_crud_entrypoint()
-
-	} else if choice == 4 {
-
-		os.Exit(0)
 	}
 
 }
