@@ -65,13 +65,7 @@ func bank_crud_entrypoint() {
 		var bank_amount int
 		var bank_choice int
 		filename := "bank.txt"
-		fmt.Println("Choose operation")
-		fmt.Println(`
-		1. Check bank amount
-		2. Add money
-		3. Withdraw money
-		4. Exit
-		`)
+		bank_menu_info()
 		fmt.Print("Your choice : ")
 		fmt.Scan(&bank_choice)
 
@@ -88,6 +82,8 @@ func bank_crud_entrypoint() {
 
 		} else if bank_choice == 4 {
 			os.Exit(0)
+		} else {
+			os.Exit(0)
 		}
 
 	}
@@ -102,8 +98,9 @@ func write_to_file(filename string, amount int) {
 	if err != nil {
 		fmt.Println("Unable to write file")
 		log.Fatal(err)
+	} else {
+		fmt.Println("Success update of file")
 	}
-	fmt.Println("Success update of file")
 
 }
 
@@ -113,8 +110,10 @@ func read_from_file(filename string) int {
 	if err != nil {
 		fmt.Println("Unable to read file")
 		log.Fatal(err)
+	} else {
+		fmt.Println("Success read from file ")
 	}
-	fmt.Println("Success read from file ")
+
 	return int_content
 
 }
@@ -124,8 +123,9 @@ func clear_file(filename string) {
 	if err != nil {
 		fmt.Println("Truncate error")
 		log.Fatal(err)
+	} else {
+		fmt.Println("Success clear file")
 	}
-	fmt.Println("Success clear file")
 
 }
 
@@ -144,13 +144,11 @@ func add_bank_amount(filename string) int {
 		fmt.Println(amount)
 		clear_file(filename)
 		write_to_file(filename, amount)
-
+		fmt.Println("Success account replenishment")
 	} else {
-
 		fmt.Println("Incorrect money output")
 	}
 
-	fmt.Println("Success account replenishment")
 	return amount
 }
 
@@ -164,11 +162,12 @@ func withdraw_bank_amount(filename string) int {
 		fmt.Println(amount)
 		clear_file(filename)
 		write_to_file(filename, amount)
-		// amount = bank_amount
+		fmt.Println("Success withdrawal from account")
 
+	} else {
+		fmt.Println("Incorrect money output")
 	}
 
-	fmt.Println("Success withdrawal from account")
 	return amount
 }
 
@@ -178,39 +177,35 @@ func main() {
 
 	for {
 		var choice int
-
-		fmt.Println("Choose function to continue")
-		fmt.Println(`
-	1. Add packages to system
-	2. Check env value at *nix system
-	3. Bank simple CRUD	app
-	4. Exit
-	5. Test write to file
-	
-	`)
+		main_menu_loop_info()
 		fmt.Print("Your choice : ")
 		fmt.Scan(&choice)
-		switch choice {
-		case 1:
-			install_packages()
+		if choice > 0 {
+			switch choice {
+			case 1:
+				install_packages()
 
-		case 2:
-			input_key := check_user_input()
-			input_value := check_os_env(input_key)
-			fmt.Println("Your value :", input_value)
+			case 2:
+				input_key := check_user_input()
+				input_value := check_os_env(input_key)
+				fmt.Println("Your value :", input_value)
 
-		case 3:
-			bank_crud_entrypoint()
-		case 4:
-			os.Exit(0)
-		case 5:
-			err := os.WriteFile("bank.txt", []byte("1000"), 0644)
+			case 3:
+				bank_crud_entrypoint()
+			case 4:
+				os.Exit(0)
+			case 5:
+				err := os.WriteFile("bank.txt", []byte("1000"), 0644)
 
-			if err != nil {
-				fmt.Println("Unable to write file")
-				log.Fatal(err)
+				if err != nil {
+					fmt.Println("Unable to write file")
+					log.Fatal(err)
+				}
+
 			}
 
+		} else {
+			fmt.Println("Incorrect value")
 		}
 
 	}
