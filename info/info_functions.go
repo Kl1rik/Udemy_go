@@ -1,8 +1,8 @@
-package main
+package info
 
 import "fmt"
 
-func main_menu_loop_info() {
+func Main_menu_loop_info() {
 	fmt.Println("Choose function to continue")
 	fmt.Println(`
 1. Add packages to system
@@ -13,7 +13,7 @@ func main_menu_loop_info() {
 	`)
 
 }
-func bank_menu_info() {
+func Bank_menu_info() {
 	fmt.Println("Choose operation")
 	fmt.Println(`
 1. Check bank amount

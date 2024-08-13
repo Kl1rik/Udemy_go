@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
-	"strconv"
 	"strings"
+
+	"udemy.course.dev/v1/filework"
+	"udemy.course.dev/v1/info"
 )
 
 // Package installer function
@@ -65,12 +66,12 @@ func bank_crud_entrypoint() {
 		var bank_amount int
 		var bank_choice int
 		filename := "bank.txt"
-		bank_menu_info()
+		info.Bank_menu_info()
 		fmt.Print("Your choice : ")
 		fmt.Scan(&bank_choice)
 
 		if bank_choice == 1 {
-			bank_amount = read_from_file(filename)
+			bank_amount = filework.Read_from_file(filename)
 			check_bank_amount(bank_amount)
 
 		} else if bank_choice == 2 {
@@ -90,60 +91,21 @@ func bank_crud_entrypoint() {
 
 }
 
-func write_to_file(filename string, amount int) {
-
-	str_amount := strconv.Itoa(amount)
-	err := os.WriteFile(filename, []byte(str_amount), 0644)
-
-	if err != nil {
-		fmt.Println("Unable to write file")
-		log.Fatal(err)
-	} else {
-		fmt.Println("Success update of file")
-	}
-
-}
-
-func read_from_file(filename string) int {
-	content, err := ioutil.ReadFile(filename)
-	int_content, err := strconv.Atoi(string(content))
-	if err != nil {
-		fmt.Println("Unable to read file")
-		log.Fatal(err)
-	} else {
-		fmt.Println("Success read from file ")
-	}
-
-	return int_content
-
-}
-
-func clear_file(filename string) {
-	err := os.Truncate(filename, 0)
-	if err != nil {
-		fmt.Println("Truncate error")
-		log.Fatal(err)
-	} else {
-		fmt.Println("Success clear file")
-	}
-
-}
-
 func check_bank_amount(amount int) {
 	fmt.Println("Your bank amount is : ", amount, "$")
 
 }
 
 func add_bank_amount(filename string) int {
-	amount := read_from_file(filename)
+	amount := filework.Read_from_file(filename)
 	var add_sum int
 	fmt.Print("Enter cash amount :")
 	fmt.Scan(&add_sum)
 	if add_sum > 0 {
 		amount += add_sum
 		fmt.Println(amount)
-		clear_file(filename)
-		write_to_file(filename, amount)
+		filework.Clear_file(filename)
+		filework.Write_to_file(filename, amount)
 		fmt.Println("Success account replenishment")
 	} else {
 		fmt.Println("Incorrect money output")
@@ -153,15 +115,15 @@ func add_bank_amount(filename string) int {
 }
 
 func withdraw_bank_amount(filename string) int {
-	amount := read_from_file(filename)
+	amount := filework.Read_from_file(filename)
 	var withdraw_sum int
 	fmt.Print("Enter cash amount :")
 	fmt.Scan(&withdraw_sum)
 	if withdraw_sum <= amount {
 		amount -= withdraw_sum
 		fmt.Println(amount)
-		clear_file(filename)
-		write_to_file(filename, amount)
+		filework.Clear_file(filename)
+		filework.Write_to_file(filename, amount)
 		fmt.Println("Success withdrawal from account")
 
 	} else {
@@ -177,7 +139,7 @@ func main() {
 
 	for {
 		var choice int
-		main_menu_loop_info()
+		info.Main_menu_loop_info()
 		fmt.Print("Your choice : ")
 		fmt.Scan(&choice)
 		if choice > 0 {
