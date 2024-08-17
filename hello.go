@@ -163,6 +163,8 @@ func main() {
 					fmt.Println("Unable to write file")
 					log.Fatal(err)
 				}
+			case 6:
+				pointer_test()
 
 			}
 
