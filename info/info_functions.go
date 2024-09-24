@@ -11,6 +11,7 @@ func Main_menu_loop_info() {
 4. Exit
 5. Test write to file
 6. Test pointer value
+7. Work with note struct
 	`)
 
 }

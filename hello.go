@@ -9,6 +9,7 @@ import (
 
 	"udemy.course.dev/v1/filework"
 	"udemy.course.dev/v1/info"
+	"udemy.course.dev/v1/struct_worker"
 )
 
 // Package installer function
@@ -166,6 +167,8 @@ func main() {
 			case 6:
 				pointer_test()
 
+			case 7:
+				struct_worker.Struct_input()
 			}
 
 		} else {
