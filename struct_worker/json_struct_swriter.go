@@ -1,6 +1,7 @@
 package struct_worker
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -19,11 +20,14 @@ func Struct_input() {
 	var text_message string
 	var time_stamp time.Time
 	var struct_object Note
+
+	reader := bufio.NewReader(os.Stdin)
+
 	fmt.Println("Enter username")
 	fmt.Scan(&username)
 
 	fmt.Println("Enter note")
-	fmt.Scan(&text_message)
+	text_message, _ = reader.ReadString('\n')
 
 	fmt.Println("Enter timestamp(auto)")
 	time_stamp = time.Now()
