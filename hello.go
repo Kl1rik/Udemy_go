@@ -7,6 +7,7 @@ import (
 
 	"udemy.course.dev/v1/bank"
 	"udemy.course.dev/v1/info"
+	"udemy.course.dev/v1/log_parser"
 	"udemy.course.dev/v1/os_managment"
 	"udemy.course.dev/v1/struct_worker"
 )
@@ -46,6 +47,10 @@ func main() {
 
 			case 7:
 				struct_worker.Struct_input()
+
+			case 8:
+				log_parser.Auth_log_parser()
+
 			}
 
 		} else {
