@@ -1,4 +1,4 @@
-package main
+package pointers
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"udemy.course.dev/v1/info"
 )
 
-func pointer_test() {
+func Pointer_test() {
 	gb_value := 4096
 	var gb_value_pointer *int
 

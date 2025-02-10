@@ -9,6 +9,7 @@ import (
 	"udemy.course.dev/v1/info"
 	"udemy.course.dev/v1/log_parser"
 	"udemy.course.dev/v1/os_managment"
+	"udemy.course.dev/v1/pointers"
 	"udemy.course.dev/v1/struct_worker"
 )
 
@@ -43,7 +44,7 @@ func main() {
 					log.Fatal(err)
 				}
 			case 6:
-				pointer_test()
+				pointers.Pointer_test()
 
 			case 7:
 				struct_worker.Struct_input()
