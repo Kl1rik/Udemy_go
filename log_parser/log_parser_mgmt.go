@@ -26,8 +26,14 @@ func Auth_log_parser() {
 
 	fmt.Println("log file content")
 	// fmt.Print(string(auth_log_std))
-
+	//Task 1
 	format_logs := strings.Split(string(auth_log_std), "\n")
+
+	//Task 2
+	//fmt.Println(format_logs[0])
+	//slice_logs := format_logs[1:3]
+	//fmt.Println(slice_logs)
+
 	info.Log_menu_info()
 
 	fmt.Scan(&filter_choice)
@@ -71,6 +77,8 @@ func Auth_log_parser() {
 		case 2:
 			var head_count int
 
+			//Task 3.1
+
 			fmt.Println("Enter number of sliced strings")
 			fmt.Scan(&head_count)
 
@@ -82,17 +90,42 @@ func Auth_log_parser() {
 
 		case 3:
 			var tail_count int
+
+			//Task 3.2
+
 			fmt_logs_range := len(format_logs)
 			fmt.Println("Enter number of sliced strings")
 			fmt.Scan(&tail_count)
 
 			format_logs_tail_slice := format_logs[fmt_logs_range-tail_count-1 : fmt_logs_range]
+
+			//Task 4
+			//len_logs := len(format_logs)
+			//special_slice := format_logs[2]
+			//special_slice := format_logs[len_logs - 1]
+			//format_logs_tail_slice = append(format_logs_tail_slice,special_slice)
+
+			//task 5-6 -//-
 			for i := range format_logs_tail_slice {
 				fmt.Println(format_logs_tail_slice[i])
 			}
-
+		case 4:
+			check_struct_arr()
 		}
 
 	}
 
+}
+
+//Task 7
+
+func check_struct_arr() {
+
+	type course struct {
+		title string
+		price float64
+		owner string
+	}
+	struct_arr := [2]course{{"Udemy GO", 2.99, "Alex"}, {"Udemy k8s", 10.99, "Tyler"}}
+	fmt.Println(struct_arr[0])
 }
