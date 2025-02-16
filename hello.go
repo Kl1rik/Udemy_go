@@ -51,7 +51,8 @@ func main() {
 
 			case 8:
 				log_parser.Auth_log_parser()
-
+			case 9:
+				struct_worker.Map_managment()
 			}
 
 		} else {

@@ -48,3 +48,15 @@ func Struct_input() {
 	fmt.Println(struct_json)
 
 }
+
+func Map_managment() {
+	bucket_keys := map[string]string{"PROD_KEY": "s0m@ h9sh", "TEST_KEY": "6e$t"}
+	fmt.Println(bucket_keys["PROD_KEY"])
+	fmt.Println(bucket_keys)
+
+	bucket_keys["STAGE_KEY"] = "st@g1n6"
+	fmt.Println(bucket_keys)
+
+	delete(bucket_keys, "TEST_KEY")
+	fmt.Println(bucket_keys)
+}

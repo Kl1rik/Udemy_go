@@ -13,6 +13,7 @@ func Main_menu_loop_info() {
 6. Test pointer value
 7. Work with note struct
 8. Check auth.log file 
+9. Work with maps
 	`)
 
 }
